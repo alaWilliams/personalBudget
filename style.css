@@ -1,0 +1,38 @@
+* {
+  font-family: 'Karla', sans-serif;
+  background-color: #939597;
+}
+
+.header {
+  font-weight: 700;
+  font-size: 3rem;
+  color: #fff;
+  background-color: #E0B589;
+  padding: 2rem;
+  text-align: center;
+}
+
+.income > *, .expenses > * {
+  background-color: #EFE1CE;
+}
+.remaining-budget {
+  font-weight: 700;
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  padding: 1rem;
+  font-weight: 700;
+}
+
+.field, .material-symbols-outlined, .details {
+  background-color: #fff;
+}
+
+.field {
+  height: 1.5rem;
+  width: 40%;
+  text-align: center;
+}
