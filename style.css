@@ -7,13 +7,13 @@
   font-weight: 700;
   font-size: 3rem;
   color: #fff;
-  background-color: #E0B589;
+  background-color: #162e6d;
   padding: 2rem;
   text-align: center;
 }
 
 .income > *, .expenses > * {
-  background-color: #EFE1CE;
+  background-color: rgb(105, 147, 178);
 }
 .remaining-budget {
   font-weight: 700;
@@ -35,4 +35,13 @@ h2 {
   height: 1.5rem;
   width: 40%;
   text-align: center;
+}
+
+.btn-add {
+  background-color: #fff;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
 }

@@ -15,39 +15,39 @@
 <body>
   <header class="header">My budget</header>
   <section class="remaining-budget">You can still spend: <span class="remaining-budget-span"></span></section>
+  <div class="container">
+    <section class="income">
+      <h2 class="section-heading">Income</h2>
+      <form class="form">
+        <fieldset>
+          <input class="income-text field" type="text" placeholder="Title" name="title"></input>
+          <input class="income-number field"type="number" placeholder="Amount" name="amount"></input>
+          <button class="btn-add" type="submit" value="add">Add</button>
+        </fieldset>
+      </form>
+      <button type="button" class="details">Details<span class="material-symbols-outlined">
+        expand_more
+        </span></button>
+      <p>Income total: </p>
 
-  <section class="income">
-    <h2 class="section-heading">Income</h2>
-    <form>
-      <fieldset>
-        <input class="income-text field" type="text" placeholder="Title"></input>
-        <input class="income-number field"type="number" placeholder="Amount"></input>
-        <button class="btn-add" type="submit">Add</button>
-      </fieldset>
-    </form>
-    <button type="button" class="details">Details<span class="material-symbols-outlined">
-      expand_more
-      </span></button>
-    <p>Income total: </p>
+    </section>
+    
 
-  </section>
-  
-
-  <section class="expenses">
-    <h2 class="section-heading">Expenses</h2>
-    <form>
-      <fieldset>
-        <input class="expenses-text field"type="text" placeholder="Title"></input>
-        <input class="expenses-number field"type="number" placeholder="Amount"></input>
-        <button class="btn-add" type="submit">Add</button>
-      </fieldset>
-    </form>
-    <button type="button" class="details">Details<span class="material-symbols-outlined">
-      expand_more
-      </span></button>
-    <p>Expenses total:</p>
-  </section>
-
+    <section class="expenses">
+      <h2 class="section-heading">Expenses</h2>
+      <form class="form">
+        <fieldset>
+          <input class="expenses-text field" type="text" placeholder="Title"></input>
+          <input class="expenses-number field" type="number" placeholder="Amount"></input>
+          <button class="btn-add" type="submit" value="add">Add</button>
+        </fieldset>
+      </form>
+      <button type="button" class="details">Details<span class="material-symbols-outlined">
+        expand_more
+        </span></button>
+      <p>Expenses total:</p>
+    </section>
+  </div>
   <script src="./script.js"></script>
 </body>
 </html>
