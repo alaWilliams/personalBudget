@@ -45,3 +45,12 @@ h2 {
   display: flex;
   justify-content: space-around;
 }
+
+.btn {
+  background-color: #fff;
+  margin: 0.5rem;
+}
+
+.hidden {
+  display: none;
+}
