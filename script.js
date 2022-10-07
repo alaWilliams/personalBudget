@@ -20,27 +20,6 @@ const expensesArr = [];
 const numberVal = Number(numberIncomeInput.value);
 const nameVal = nameIncomeInput.value;
 
-
-const showIncome = (e) => {
-  e.preventDefault()
-  const numberVal = Number(numberIncomeInput.value);
-  const nameVal = nameIncomeInput.value;
-  let item = {
-    name: nameVal,
-    amount: numberVal,
-    id: nanoid(10),
-  };
-  showTotalIncome(item);
-  showIncomeDetails(item);
-  ;
-}
-
-const showTotalIncome = (item) => {
-  incomeArr.push(item.amount);
-  const sum = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-  incomeTotal.innerHTML = `Income total: ${sum}`;
-}
-
 const showIncomeDetails = (item) => {
   const newIncome = incomeDetails.appendChild(document.createElement('li'));
   newIncome.textContent = `${nameIncomeInput.value} - ${numberIncomeInput.value}`;
@@ -92,15 +71,36 @@ const showIncomeDetails = (item) => {
   })
 
   deleteBtn.addEventListener('click', () => {
-    console.log(incomeArr);
-    // console.log(item.amount);
-    // incomeArr.pop(incomeArr.forEach(element => element === item.amount));
+    const newArr = incomeArr.filter(element => element !== item.amount)
     newIncome.remove();
+    const sum = newArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    incomeTotal.innerHTML = `Income total: ${sum}`;
   })
+
   saveBtn.addEventListener('click', () => {
    //console.log(item);
    
   })
+}
+
+const showTotalIncome = (item) => {
+  incomeArr.push(item.amount);
+  const sum = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+  incomeTotal.innerHTML = `Income total: ${sum}`;
+}
+
+const showIncome = (e) => {
+  e.preventDefault()
+  const numberVal = Number(numberIncomeInput.value);
+  const nameVal = nameIncomeInput.value;
+  let item = {
+    name: nameVal,
+    amount: numberVal,
+    id: nanoid(10),
+  };
+  showTotalIncome(item);
+  showIncomeDetails(item);
+  ;
 }
 
 addIncomeBtn.addEventListener('click', showIncome);
@@ -177,11 +177,12 @@ const showExpensesDetails = (item) => {
   })
 
   deleteBtn.addEventListener('click', () => {
-    console.log(incomeArr);
-    // console.log(item.amount);
-    // incomeArr.pop(incomeArr.forEach(element => element === item.amount));
+    const newArr = expensesArr.filter(element => element !== item.amount)
     newExpenses.remove();
+    const sum = newArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    expensesTotal.innerHTML = `Expenses total: ${sum}`;
   })
+
   saveBtn.addEventListener('click', () => {
    //console.log(item);
    
