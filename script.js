@@ -3,26 +3,24 @@ import { nanoid } from 'https://cdn.jsdelivr.net/npm/nanoid/nanoid.js'
 const addIncomeBtn = document.querySelector('.btn-income-add');
 const nameIncomeInput = document.querySelector('.income-text');
 const numberIncomeInput = document.querySelector('.income-number');
-const incomeTotal = document.querySelector('.income-total');
+const incomeTotal = document.querySelector('.income-total-span');
 const incomeDetails = document.querySelector('.income-details');
 const addExpensesBtn = document.querySelector('.btn-expenses-add');
-const remainingBudget = document.querySelector('.remaining-budget-span')
+const remainingBudget = document.querySelector('.remaining-budget')
 const nameExpensesInput = document.querySelector('.expenses-text');
 const numberExpensesInput = document.querySelector('.expenses-number');
-const expensesTotal = document.querySelector('.expenses-total');
+const expensesTotal = document.querySelector('.expenses-total-span');
 const expensesDetails = document.querySelector('.expenses-details');
 
-
-const toSpent = [];
+ 
 const incomeArr = [];
 const expensesArr = [];
 
-const numberVal = Number(numberIncomeInput.value);
-const nameVal = nameIncomeInput.value;
-
 const showIncomeDetails = (item) => {
   const newIncome = incomeDetails.appendChild(document.createElement('li'));
-  newIncome.textContent = `${nameIncomeInput.value} - ${numberIncomeInput.value}`;
+  const inputField = newIncome.appendChild(document.createElement('div'))
+  const content = newIncome.appendChild(document.createElement('p'));
+  content.textContent = `${nameIncomeInput.value} - ${numberIncomeInput.value}`;
   newIncome.setAttribute('data-id', item.id);
   const editBtn = newIncome.appendChild(document.createElement('button'));
   editBtn.textContent = 'Edit';
@@ -47,17 +45,29 @@ const showIncomeDetails = (item) => {
   cancelBtn.setAttribute('data-id', item.id);
   cancelBtn.classList.add('hidden');
 
-   nameIncomeInput.value = '';
-   numberIncomeInput.value = '';
+  const nameInput = inputField.appendChild(document.createElement('input'));
+  nameInput.setAttribute('type', 'text');
+  nameInput.setAttribute('placeholder', `${item.name}`);
+  nameInput.setAttribute('name', 'title');
+  nameInput.style.backgroundColor = 'white';
+  nameInput.classList.add('hidden');
+  const numInput = inputField.appendChild(document.createElement('input'));
+  numInput.setAttribute('type', 'number');
+  numInput.setAttribute('placeholder', `${item.amount}`);
+  numInput.setAttribute('name', 'amount');
+  numInput.style.backgroundColor = 'white';
+  numInput.classList.add('hidden');
+
+  
 
   editBtn.addEventListener('click', () => {
     editBtn.classList.add('hidden');
     cancelBtn.classList.remove('hidden');
     saveBtn.classList.remove('hidden');
     deleteBtn.classList.add('hidden');
-    newIncome.setAttribute("contenteditable", "true");
-    newIncome.style.backgroundColor = "white";
-    newIncome.style.border = "1px solid red"
+    content.textContent = '';
+    nameInput.classList.remove('hidden');
+    numInput.classList.remove('hidden');
   })
 
   cancelBtn.addEventListener('click', () => {
@@ -65,28 +75,49 @@ const showIncomeDetails = (item) => {
     editBtn.classList.remove('hidden');
     saveBtn.classList.add('hidden');
     deleteBtn.classList.remove('hidden');
-    newIncome.style.border = "none";
-    newIncome.style.backgroundColor = "#939597";
+    nameInput.classList.add('hidden');
+    numInput.classList.add('hidden');
+    content.textContent = `${item.name} - ${item.amount}`
 
   })
 
   deleteBtn.addEventListener('click', () => {
-    const newArr = incomeArr.filter(element => element !== item.amount)
+    const index = incomeArr.indexOf(item.amount);
+    if (index > -1) {
+      incomeArr.splice(index, 1);
+    };
     newIncome.remove();
-    const sum = newArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-    incomeTotal.innerHTML = `Income total: ${sum}`;
+    const sum = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    incomeTotal.innerText = sum;
+    showToSpent(incomeArr, expensesArr);
   })
 
   saveBtn.addEventListener('click', () => {
-   //console.log(item);
-   
-  })
+   content.textContent = `${nameInput.value} - ${numInput.value}`
+   cancelBtn.classList.add('hidden');
+   saveBtn.classList.add('hidden');
+   editBtn.classList.remove('hidden');
+   deleteBtn.classList.remove('hidden');
+   nameInput.classList.add('hidden');
+   numInput.classList.add('hidden');
+
+   const index = incomeArr.indexOf(item.amount);
+    if (index > -1) {
+      incomeArr.splice(index, 1, Number(numInput.value));
+    };
+    const sum = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    incomeTotal.innerText = sum;
+    showToSpent(incomeArr, expensesArr);
+  });
+
+  nameIncomeInput.value = '';
+  numberIncomeInput.value = '';
 }
 
 const showTotalIncome = (item) => {
   incomeArr.push(item.amount);
   const sum = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-  incomeTotal.innerHTML = `Income total: ${sum}`;
+  incomeTotal.innerText = sum;
 }
 
 const showIncome = (e) => {
@@ -100,7 +131,7 @@ const showIncome = (e) => {
   };
   showTotalIncome(item);
   showIncomeDetails(item);
-  ;
+  showToSpent(incomeArr, expensesArr);
 }
 
 addIncomeBtn.addEventListener('click', showIncome);
@@ -117,18 +148,20 @@ const showExpenses = (e) => {
   };
   showTotalExpenses(item);
   showExpensesDetails(item);
-  ;
+  showToSpent(incomeArr, expensesArr);
 }
 
 const showTotalExpenses = (item) => {
   expensesArr.push(item.amount);
   const sum = expensesArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-  expensesTotal.innerHTML = `Expenses total: ${sum}`;
+  expensesTotal.innerText = sum;
 }
 
 const showExpensesDetails = (item) => {
   const newExpenses = expensesDetails.appendChild(document.createElement('li'));
-  newExpenses.textContent = `${nameExpensesInput.value} - ${numberExpensesInput.value}`;
+  const content = newExpenses.appendChild(document.createElement('p'))
+  const inputField = newExpenses.appendChild(document.createElement('div'))
+  content.textContent = `${nameExpensesInput.value} - ${numberExpensesInput.value}`;
   newExpenses.setAttribute('data-id', item.id);
   const editBtn = newExpenses.appendChild(document.createElement('button'));
   editBtn.textContent = 'Edit';
@@ -153,6 +186,19 @@ const showExpensesDetails = (item) => {
   cancelBtn.setAttribute('data-id', item.id);
   cancelBtn.classList.add('hidden');
 
+  const nameInput = inputField.appendChild(document.createElement('input'));
+  nameInput.setAttribute('type', 'text');
+  nameInput.setAttribute('placeholder', `${item.name}`);
+  nameInput.setAttribute('name', 'title');
+  nameInput.style.backgroundColor = 'white';
+  nameInput.classList.add('hidden');
+  const numInput = inputField.appendChild(document.createElement('input'));
+  numInput.setAttribute('type', 'number');
+  numInput.setAttribute('placeholder', `${item.amount}`);
+  numInput.setAttribute('name', 'amount');
+  numInput.style.backgroundColor = 'white';
+  numInput.classList.add('hidden');
+
    nameExpensesInput.value = '';
    numberExpensesInput.value = '';
 
@@ -161,9 +207,9 @@ const showExpensesDetails = (item) => {
     cancelBtn.classList.remove('hidden');
     saveBtn.classList.remove('hidden');
     deleteBtn.classList.add('hidden');
-    newExpenses.setAttribute("contenteditable", "true");
-    newExpenses.style.backgroundColor = "white";
-    newExpenses.style.border = "1px solid red"
+    content.textContent = '';
+    nameInput.classList.remove('hidden');
+    numInput.classList.remove('hidden');
   })
 
   cancelBtn.addEventListener('click', () => {
@@ -171,26 +217,54 @@ const showExpensesDetails = (item) => {
     editBtn.classList.remove('hidden');
     saveBtn.classList.add('hidden');
     deleteBtn.classList.remove('hidden');
-    newExpenses.style.border = "none";
-    newExpenses.style.backgroundColor = "#939597";
-
+    nameInput.classList.add('hidden');
+    numInput.classList.add('hidden')
+    content.textContent = `${item.name} - ${item.amount}`;
+  
   })
 
   deleteBtn.addEventListener('click', () => {
-    const newArr = expensesArr.filter(element => element !== item.amount)
+    const index = expensesArr.indexOf(item.amount);
+    if (index > -1) {
+      expensesArr.splice(index, 1);
+    };
     newExpenses.remove();
-    const sum = newArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-    expensesTotal.innerHTML = `Expenses total: ${sum}`;
+    const sum = expensesArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    expensesTotal.innerText = sum;
+    showToSpent(incomeArr, expensesArr);
   })
 
   saveBtn.addEventListener('click', () => {
-   //console.log(item);
-   
+    content.textContent = `${nameInput.value} - ${numInput.value}`
+    cancelBtn.classList.add('hidden');
+    saveBtn.classList.add('hidden');
+    editBtn.classList.remove('hidden');
+    deleteBtn.classList.remove('hidden');
+    nameInput.classList.add('hidden');
+    numInput.classList.add('hidden');
+    const index = expensesArr.indexOf(item.amount);
+    if (index > -1) {
+      expensesArr.splice(index, 1, Number(numInput.value));
+    };
+    const sum = expensesArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    expensesTotal.innerText = sum;
+    showToSpent(incomeArr, expensesArr);
   })
+  
 }
 
 addExpensesBtn.addEventListener('click', showExpenses);
 
-const showToSpent = () => {
-  
-}
+const showToSpent = (arr1, arr2) => {
+ const num1 = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+ const num2 = expensesArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+  if (num1 === num2) {
+    remainingBudget.textContent = `Your account balance is ZERO.`;
+  } if (num1 < num2) {
+    remainingBudget.textContent = `Your account balance is NEGATIVE. You exceeded your budget by ${num2 - num1} PLN.`
+  } if (num1 > num2) {
+    remainingBudget.textContent = `You can still spend ${num1 - num2} PLN`; 
+  }
+};
+
+showToSpent(incomeArr, expensesArr);
