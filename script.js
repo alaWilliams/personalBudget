@@ -110,18 +110,37 @@ const showIncomeDetails = (item) => {
   })
 
   saveBtn.addEventListener('click', () => {
-   content.textContent = `${nameInput.value} - ${numInput.value}`
-  toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
-   nameInput.classList.add('hidden');
-   numInput.classList.add('hidden');
-
-   const index = incomeArr.indexOf(item.amount);
-    if (index > -1) {
-      incomeArr.splice(index, 1, Number(numInput.value));
-    };
-    const sum = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-    incomeTotal.innerText = sum;
-    showToSpent(incomeArr, expensesArr);
+    const changeItemValue = () => {
+      if (nameInput.value === '' && numInput.value !== '') {
+        item.amount = Number(numInput.value);
+        content.textContent = `${item.name} - ${item.amount}`;
+        
+      } if (nameInput.value !=='' && numInput.value === '') {
+        item.name = nameInput.value;
+        content.textContent = `${item.name} - ${item.amount}`
+      } if (nameInput.value !=='' && numInput.value !== '') {
+        item.name = nameInput.value
+        item.amount = Number(numInput.value)
+        content.textContent = `${item.name} - ${item.amount}`;
+      
+    }}
+    changeItemValue();
+    toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
+    nameInput.classList.add('hidden');
+    numInput.classList.add('hidden');
+    console.log(incomeArr);
+    console.log(item);
+    console.log(item.amount);
+    const index = incomeArr.indexOf(1);
+    console.log(index);
+    // const index = incomeArr.indexOf(item.amount);
+    //   if (index > -1) {
+    //     incomeArr.splice(index, 1, item.amount);
+    //   };
+    //   const sum = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+    //   incomeTotal.innerText = sum;
+    // console.log(incomeArr)
+      showToSpent(incomeArr, expensesArr);
   });
 
   nameIncomeInput.value = '';
@@ -138,10 +157,45 @@ const showIncome = (e) => {
     amount: numberVal,
     id: nanoid(10),
   };
+  if (nameVal === '') {
+    alert("Please provide an income name");
+    return false
+  } if (numberVal === '' || numberVal === 0) {
+    alert("Please provide an income amount");
+    return false
+  } else {
+    showTotal(item, incomeArr, incomeTotal);
+    showIncomeDetails(item);
+    showToSpent(incomeArr, expensesArr);
+  }
   showTotal(item, incomeArr, incomeTotal);
   showIncomeDetails(item);
   showToSpent(incomeArr, expensesArr);
 }
+
+// const showItem = (e, numInput, nameInput, income, expenses, total) => {
+//   e.preventDefault()
+//   const numberVal = Number(numInput.value);
+//   const nameVal = nameInput.value;
+//   let item = {
+//     name: nameVal,
+//     amount: numberVal,
+//     id: nanoid(10),
+//   };
+//   if (nameVal === '') {
+//     alert("Please provide a name");
+//     return false
+//   } if (numberVal === '' || numberVal === 0) {
+//     alert("Please provide an amount");
+//     return false
+//   } else {
+//     showTotal(item, income, total);
+//     showIncomeDetails(item);
+//     showToSpent(income, expenses);
+//   }
+// }
+
+showItem(e, numberIncomeInput, nameIncomeInput, incomeArr, expensesArr, incomeTotal)
 
 addIncomeBtn.addEventListener('click', showIncome);
 
@@ -232,7 +286,20 @@ const showExpensesDetails = (item) => {
   })
 
   saveBtn.addEventListener('click', () => {
-    content.textContent = `${nameInput.value} - ${numInput.value}`
+    const changeItemValue = () => {
+      if (nameInput.value === '' && numInput.value !== '') {
+        item.amount = Number(numInput.value);
+        content.textContent = `${item.name} - ${item.amount}`;
+      } if (nameInput.value !=='' && numInput.value === '') {
+        item.name = nameInput.value;
+        content.textContent = `${item.name} - ${item.amount}`
+      } if (nameInput.value !=='' && numInput.value !== '') {
+        item.name = nameInput.value
+        item.amount = Number(numInput.value)
+        content.textContent = `${item.name} - ${item.amount}`;
+      
+    }}
+    changeItemValue();
     toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
     nameInput.classList.add('hidden');
     numInput.classList.add('hidden');
