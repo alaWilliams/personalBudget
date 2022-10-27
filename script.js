@@ -114,32 +114,24 @@ const showIncomeDetails = (item) => {
       if (nameInput.value === '' && numInput.value !== '') {
         item.amount = Number(numInput.value);
         content.textContent = `${item.name} - ${item.amount}`;
-        
       } if (nameInput.value !=='' && numInput.value === '') {
         item.name = nameInput.value;
         content.textContent = `${item.name} - ${item.amount}`
       } if (nameInput.value !=='' && numInput.value !== '') {
         item.name = nameInput.value
         item.amount = Number(numInput.value)
-        content.textContent = `${item.name} - ${item.amount}`;
-      
+        content.textContent = `${item.name} - ${item.amount}`; 
     }}
     changeItemValue();
     toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
     nameInput.classList.add('hidden');
     numInput.classList.add('hidden');
-    console.log(incomeArr);
-    console.log(item);
-    console.log(item.amount);
-    const index = incomeArr.indexOf(1);
-    console.log(index);
-    // const index = incomeArr.indexOf(item.amount);
-    //   if (index > -1) {
-    //     incomeArr.splice(index, 1, item.amount);
-    //   };
-    //   const sum = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
-    //   incomeTotal.innerText = sum;
-    // console.log(incomeArr)
+    const index = incomeArr.indexOf(item.amount);
+      if (index >= -1) {
+        incomeArr.splice(index, 1, item.amount);
+      };
+      const sum = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+      incomeTotal.innerText = sum;
       showToSpent(incomeArr, expensesArr);
   });
 
@@ -168,34 +160,8 @@ const showIncome = (e) => {
     showIncomeDetails(item);
     showToSpent(incomeArr, expensesArr);
   }
-  showTotal(item, incomeArr, incomeTotal);
-  showIncomeDetails(item);
-  showToSpent(incomeArr, expensesArr);
 }
 
-// const showItem = (e, numInput, nameInput, income, expenses, total) => {
-//   e.preventDefault()
-//   const numberVal = Number(numInput.value);
-//   const nameVal = nameInput.value;
-//   let item = {
-//     name: nameVal,
-//     amount: numberVal,
-//     id: nanoid(10),
-//   };
-//   if (nameVal === '') {
-//     alert("Please provide a name");
-//     return false
-//   } if (numberVal === '' || numberVal === 0) {
-//     alert("Please provide an amount");
-//     return false
-//   } else {
-//     showTotal(item, income, total);
-//     showIncomeDetails(item);
-//     showToSpent(income, expenses);
-//   }
-// }
-
-showItem(e, numberIncomeInput, nameIncomeInput, incomeArr, expensesArr, incomeTotal)
 
 addIncomeBtn.addEventListener('click', showIncome);
 
@@ -276,7 +242,7 @@ const showExpensesDetails = (item) => {
 
   deleteBtn.addEventListener('click', () => {
     const index = expensesArr.indexOf(item.amount);
-    if (index > -1) {
+    if (index >= -1) {
       expensesArr.splice(index, 1);
     };
     newExpenses.remove();
@@ -297,14 +263,14 @@ const showExpensesDetails = (item) => {
         item.name = nameInput.value
         item.amount = Number(numInput.value)
         content.textContent = `${item.name} - ${item.amount}`;
-      
     }}
+
     changeItemValue();
     toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
     nameInput.classList.add('hidden');
     numInput.classList.add('hidden');
     const index = expensesArr.indexOf(item.amount);
-    if (index > -1) {
+    if (index >= -1) {
       expensesArr.splice(index, 1, Number(numInput.value));
     };
     const sum = expensesArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
@@ -317,8 +283,8 @@ const showExpensesDetails = (item) => {
 addExpensesBtn.addEventListener('click', showExpenses);
 
 const showToSpent = (arr1, arr2) => {
- const num1 = incomeArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
- const num2 = expensesArr.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+ const num1 = arr1.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
+ const num2 = arr2.reduce((previousValue, currentValue) => previousValue + currentValue, 0);
   if (num1 === num2) {
     remainingBudget.textContent = `Your account balance is ZERO.`;
   } if (num1 < num2) {
@@ -328,5 +294,4 @@ const showToSpent = (arr1, arr2) => {
   }
 };
 
-showToSpent(incomeArr, expensesArr);
 
