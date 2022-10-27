@@ -305,5 +305,3 @@ const showToSpent = (arr1, arr2) => {
     remainingBudget.textContent = `You can still spend ${num1 - num2} PLN`; 
   }
 };
-
-
