@@ -24,20 +24,38 @@ const showTotal = (item, array, total) => {
   total.innerText = sum;
 }
 
-const toggleBtnClass = (btn) => {
-  if (btn.classList.contains('hidden')) {
-    return btn.classList.remove('hidden');
+// const toggleBtnClass = (btn) => {
+//   if (btn.classList.contains('hidden')) {
+//     return btn.classList.remove('hidden');
+//   } else {
+//     return btn.classList.add('hidden');
+//   }
+// }
+// const toggleAllButtons = (btn1, btn2, btn3, btn4) => {
+//   toggleBtnClass(btn1);
+//   toggleBtnClass(btn2)
+//   toggleBtnClass(btn3);
+//   toggleBtnClass(btn4);
+// }
+
+const toggleClass = (element) => {
+  if (element.classList.contains('hidden')) {
+    return element.classList.remove('hidden');
   } else {
-    return btn.classList.add('hidden');
+    return element.classList.add('hidden');
   }
 }
 const toggleAllButtons = (btn1, btn2, btn3, btn4) => {
-  toggleBtnClass(btn1);
-  toggleBtnClass(btn2)
-  toggleBtnClass(btn3);
-  toggleBtnClass(btn4);
+  toggleClass(btn1);
+  toggleClass(btn2)
+  toggleClass(btn3);
+  toggleClass(btn4);
 }
 
+const inputToggle = (input1, input2) => {
+  toggleClass(input1);
+  toggleClass(input2);
+}
 
 const showIncomeDetails = (item) => {
   const newIncome = incomeDetails.appendChild(document.createElement('li'));
@@ -86,14 +104,12 @@ const showIncomeDetails = (item) => {
   editBtn.addEventListener('click', () => {
     toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
     content.textContent = '';
-    nameInput.classList.remove('hidden');
-    numInput.classList.remove('hidden');
+    inputToggle(nameInput, numInput);
   })
 
   cancelBtn.addEventListener('click', () => {
     toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
-    nameInput.classList.add('hidden');
-    numInput.classList.add('hidden');
+    inputToggle(nameInput, numInput);
     content.textContent = `${item.name} - ${item.amount}`
 
   })
@@ -124,8 +140,7 @@ const showIncomeDetails = (item) => {
     }}
     changeItemValue();
     toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
-    nameInput.classList.add('hidden');
-    numInput.classList.add('hidden');
+    inputToggle(nameInput, numInput);
     const index = incomeArr.indexOf(item.amount);
       if (index >= -1) {
         incomeArr.splice(index, 1, item.amount);
@@ -228,14 +243,12 @@ const showExpensesDetails = (item) => {
   editBtn.addEventListener('click', () => {
     toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
     content.textContent = '';
-    nameInput.classList.remove('hidden');
-    numInput.classList.remove('hidden');
+    inputToggle(nameInput, numInput);
   })
 
   cancelBtn.addEventListener('click', () => {
     toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
-    nameInput.classList.add('hidden');
-    numInput.classList.add('hidden')
+    inputToggle(nameInput, numInput);
     content.textContent = `${item.name} - ${item.amount}`;
   
   })
@@ -267,8 +280,7 @@ const showExpensesDetails = (item) => {
 
     changeItemValue();
     toggleAllButtons(editBtn, cancelBtn, saveBtn, deleteBtn);
-    nameInput.classList.add('hidden');
-    numInput.classList.add('hidden');
+    inputToggle(nameInput, numInput);
     const index = expensesArr.indexOf(item.amount);
     if (index >= -1) {
       expensesArr.splice(index, 1, Number(numInput.value));
