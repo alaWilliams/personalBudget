@@ -207,6 +207,4 @@ const showDetails = (item, details, firstInput, secondInput, firstArr, total) =>
 
   nameIncomeInput.value = '';
   numberIncomeInput.value = '';
-}
-
-
+};
