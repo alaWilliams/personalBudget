@@ -54,3 +54,7 @@ h2 {
 .hidden {
   display: none;
 }
+
+.validation {
+  height:2rem;
+}
