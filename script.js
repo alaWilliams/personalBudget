@@ -11,6 +11,8 @@ const nameExpensesInput = document.querySelector('.expenses-text');
 const numberExpensesInput = document.querySelector('.expenses-number');
 const expensesTotal = document.querySelector('.expenses-total-span');
 const expensesDetails = document.querySelector('.expenses-details');
+const alertIncome = document.querySelector('.val-income');
+const alertExpenses = document.querySelector('.val-expenses');
 
  
 const incomeArr = [];
@@ -40,6 +42,9 @@ const toggleAllButtons = (btn1, btn2, btn3, btn4) => {
 
 
 const showIncome = (e) => {
+  alertIncome.textContent = '';
+  alertIncome.style.backgroundColor = '#939597';
+  alertIncome.style.border = 'none';
   e.preventDefault()
   const numberVal = Number(numberIncomeInput.value);
   const nameVal = nameIncomeInput.value;
@@ -49,10 +54,14 @@ const showIncome = (e) => {
     id: nanoid(10),
   };
   if (nameVal === '') {
-    alert('No name provided');
+    alertIncome.textContent = 'No name provided';
+    alertIncome.style.backgroundColor = '#636466';
+    alertIncome.style.border = '1px solid #000';
     return false
   } if (numberVal <= 0) {
-    alert("Please provide an income amount");
+    alertIncome.textContent = 'Please provide an income amount';
+    alertIncome.style.backgroundColor = '#636466';
+    alertIncome.style.border = '1px solid #000';
     return false
   } else {
     showTotal(item, incomeArr, incomeTotal);
@@ -66,6 +75,9 @@ addIncomeBtn.addEventListener('click', showIncome);
 
 //EXPENSES
 const showExpenses = (e) => {
+  alertExpenses.textContent = '';
+  alertExpenses.style.backgroundColor = '#939597';
+  alertExpenses.style.border = 'none';
   e.preventDefault()
   const numberVal = Number(numberExpensesInput.value);
   const nameVal = nameExpensesInput.value;
@@ -75,10 +87,14 @@ const showExpenses = (e) => {
     id: nanoid(10),
   };
   if (nameVal === '') {
-    alert("Please provide an income amount");
+    alertExpenses.textContent = 'No name provided';
+    alertExpenses.style.backgroundColor = '#636466';
+    alertExpenses.style.border = '1px solid #000';
     return false
   } if (numberVal <= 0) {
-    alert("Please provide an income amount");
+    alertExpenses.textContent = 'Please provide an income amount';
+    alertExpenses.style.backgroundColor = '#636466';
+    alertExpenses.style.border = '1px solid #000';
     return false
   } else {
     showTotal(item, expensesArr, expensesTotal);
